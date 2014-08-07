@@ -27,6 +27,8 @@
 
 #import "AppDelegate.h"
 #import "CCBuilderReader.h"
+#import "DAL.h"
+#import "HUCategory.h"
 
 @implementation AppController
 
@@ -46,6 +48,8 @@
         [UIScreen mainScreen].currentMode = [UIScreenMode emulatedMode:UIScreenScaledAspectFitEmulationMode];
 #endif
     
+    [self customInit];
+    
     // Configure CCFileUtils to work with SpriteBuilder
     [CCBReader configureCCFileUtils];
     
@@ -55,6 +59,27 @@
     [self setupCocos2dWithOptions:cocos2dSetup];
     
     return YES;
+}
+
+-(void) customInit
+{
+    
+    [DAL initStatic];
+    
+    NSArray *a = [DAL selectAllCategories];
+    CCLOG(@"here ");
+    NSLog(@"here!!!");
+    
+    if (a == nil)
+        NSLog(@"a is nil");
+    
+    for (int i = 0; i< [a count]; i++)
+    {
+        HUCategory *hk = [a objectAtIndex:i];
+        
+        CCLOG(@"cat name == %@", [hk nameRu]);
+    }
+    //all custom app init goes here
 }
 
 - (CCScene*) startScene
